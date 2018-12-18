@@ -2,14 +2,18 @@
 <ExtensionDefinition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.hummingbird-alm.com/testframework/201610">
   <Name>Hummingbird Custom Tools</Name>
   <Id>D956AAE1-FB0D-4118-B30E-1AFE732A7BE0</Id>
-  <Version Major="1" Minor="0" Build="1" />
+  <Version Major="1" Minor="0" Build="5" />
   <MinFrameworkVersion Major="1" Minor="1" Build="1209" />
-  <MaxFrameworkVersion Major="1" Minor="99" Build="99999" />
+  <MaxFrameworkVersion Major="1" Minor="2" Build="1231" />
   <Company>Huaxing YUAN</Company>
   <Description>Custom tools extension contains commonly used tools for Developers and Testers</Description>
   <Copyright>Copyright 2018 Huaxing YUAN, All rights reserved.</Copyright>
   <MainDllFile>Hummingbird.CustomTools.dll</MainDllFile>
   <AdditionalFiles>
     <File>Hummingbird.CustomTools.pdb</File>
+    <File>Microsoft.IdentityModel.JsonWebTokens.dll</File>
+    <File>Microsoft.IdentityModel.Logging.dll</File>
+    <File>Microsoft.IdentityModel.Tokens.dll</File>
+    <File>System.IdentityModel.Tokens.Jwt.dll</File>
   </AdditionalFiles>
 </ExtensionDefinition>
