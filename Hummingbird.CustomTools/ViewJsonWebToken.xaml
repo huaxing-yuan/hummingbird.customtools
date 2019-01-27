@@ -35,10 +35,10 @@
         </Border>
 
         <TextBlock Text="Encoded Token:"  Style="{DynamicResource TextBlockViewHeader}" Grid.Row="1" />
-        <TextBox x:Name="txtToken" Grid.Row="1"  Grid.Column="2" TextChanged="TxtToken_TextChanged"/>
+        <TextBox x:Name="txtToken" Grid.Row="1"  Grid.Column="2" TextChanged="TxtToken_TextChanged" TextWrapping="Wrap" FontFamily="{DynamicResource CodeFontFamily}" />
 
         <TextBlock Text="Encoded Secret:"  Style="{DynamicResource TextBlockViewHeader}" Grid.Row="2" />
-        <TextBox x:Name="txtSecret" Grid.Row="2"  Grid.Column="2" TextChanged="TxtSecret_TextChanged"/>
+        <TextBox x:Name="txtSecret" Grid.Row="2"  Grid.Column="2" TextChanged="TxtSecret_TextChanged" TextWrapping="Wrap" FontFamily="{DynamicResource CodeFontFamily}"/>
 
         <ui:GridWithPadding Grid.Row="3" Grid.Column="1" Padding="4">
             <Grid.RowDefinitions>
@@ -50,11 +50,15 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Border Background="{DynamicResource ControlBackgroundBrush}" Margin="1" Padding="4">
             <TextBlock Text="HEADER"  Style="{DynamicResource TextBlockInformation}" />
-            <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" Grid.Row="1" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" SyntaxHighlighting="Java" x:Name="txtHeader" TextChanged="TxtHeader_TextChanged" />
+            </Border>
+            <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" Grid.Row="1" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="txtHeader" TextChanged="TxtHeader_TextChanged" />
 
-            <TextBlock Text="PAYLOAD"  Style="{DynamicResource TextBlockInformation}" Grid.Column="1"  />
-            <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" Grid.Row="1" Grid.Column="1" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" SyntaxHighlighting="Java" x:Name="txtPayload" TextChanged="TxtPayload_TextChanged"/>
+            <Border Grid.Column="1" Background="{DynamicResource ControlBackgroundBrush}" Margin="1" Padding="4">
+                <TextBlock Text="PAYLOAD"  Style="{DynamicResource TextBlockInformation}"  />
+            </Border>
+            <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" Grid.Row="1" Grid.Column="1" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="txtPayload" TextChanged="TxtPayload_TextChanged"/>
         </ui:GridWithPadding>
         
     </ui:GridWithPadding>

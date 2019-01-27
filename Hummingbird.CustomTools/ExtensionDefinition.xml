@@ -2,7 +2,7 @@
 <ExtensionDefinition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.hummingbird-alm.com/testframework/201610">
   <Name>Hummingbird Custom Tools</Name>
   <Id>D956AAE1-FB0D-4118-B30E-1AFE732A7BE0</Id>
-  <Version Major="1" Minor="0" Build="5" />
+  <Version Major="1" Minor="1" Build="5" />
   <MinFrameworkVersion Major="1" Minor="1" Build="1219" />
   <MaxFrameworkVersion Major="1" Minor="2" Build="1231" />
   <Company>Huaxing YUAN</Company>
