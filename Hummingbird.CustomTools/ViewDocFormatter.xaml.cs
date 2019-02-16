@@ -50,9 +50,13 @@ namespace Hummingbird.CustomTools
             }
             catch(XmlException xmlex)
             {
-                var line = txtDocument.Document.GetLineByNumber(xmlex.LineNumber);
-                txtDocument.TextArea.Caret.Offset = line.Offset + xmlex.LinePosition;
-                txtDocument.TextArea.Caret.BringCaretToView();
+                if (xmlex.LineNumber > 0)
+                {
+                    var line = txtDocument.Document.GetLineByNumber(xmlex.LineNumber);
+                    txtDocument.TextArea.Caret.Offset = line.Offset + xmlex.LinePosition;
+                    txtDocument.TextArea.Caret.BringCaretToView();
+                    
+                }
                 this.ShowMessageBox("Error occurred when formatting XML document", xmlex.Message);
             }
             catch(Exception ex)
@@ -119,11 +123,6 @@ namespace Hummingbird.CustomTools
             JToken token = JToken.Parse(text);
             var prettyFormatted = token.ToString(Newtonsoft.Json.Formatting.Indented);
             return prettyFormatted;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void BtnZoomIn_Click(object sender, RoutedEventArgs e)
