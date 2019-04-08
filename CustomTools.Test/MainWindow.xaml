@@ -15,5 +15,8 @@
         <TabItem Header="ViewDocFormatter">
             <customtools:ViewDocFormatter />
         </TabItem>
+        <TabItem Header="JWT Utility">
+            <customtools:ViewJwtGenerator />
+        </TabItem>
     </TabControl>
 </ui:BasicWindow>

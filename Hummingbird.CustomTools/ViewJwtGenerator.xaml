@@ -1,0 +1,200 @@
+﻿<ui:ModernContent x:Class="Hummingbird.CustomTools.ViewJwtGenerator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hummingbird.CustomTools"
+             xmlns:ui="clr-namespace:Hummingbird.UI;assembly=Hummingbird.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ui:ModernContent.Resources>
+        <local:JwtNameToDescriptionConverter x:Key="JwtNameToDescriptionConverter"/>
+    </ui:ModernContent.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource HighlightGradientBrushHorizontal}"  Grid.ColumnSpan="2" >
+            <TextBlock Text="Json Web Token Generator" Foreground="White" Margin="10,4" Style="{DynamicResource TextBlockViewHeader}" HorizontalAlignment="Right" />
+        </Border>
+
+        <!-- Welcome panel -->
+        <Grid Grid.Row="1" Margin="20,0" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Welcome to JWT Utility extension for Hummingbird Project." Style="{DynamicResource TextBlockViewHeaderHighlighted}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            <TextBlock  Grid.Row="1" Text="Please choose JWT Generating your scenario: " Style="{DynamicResource TextBlockInformation}"  />
+
+            <Button Grid.Row="2" Margin="10,4"  Style="{DynamicResource ToolbarButtonStyle}" HorizontalContentAlignment="Stretch" >
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:AppBarIcon IconKey="appbar_interface_password" Grid.RowSpan="2" VerticalAlignment="Center" IsCircleVisible="True" Width="48" Margin="10,0" />
+                    <TextBlock Text="Generate a token using Hmac algorithm." Style="{DynamicResource TextBlockViewHeader}" Grid.Column="1" />
+                    <TextBlock Text="Token will use HS256, HS384, HS512 as signature algorithm, you must have the signature key." Grid.Column="1" Grid.Row="1" />
+                </Grid>
+            </Button>
+            <Button Grid.Row="3" Margin="10,4" Style="{DynamicResource ToolbarButtonStyle}">
+                <Grid  Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:AppBarIcon IconKey="appbar_key_old" Grid.RowSpan="2" VerticalAlignment="Center" IsCircleVisible="True" Width="48" Margin="10,0" />
+                    <TextBlock Text="Generate a token using RSA algorithm." Style="{DynamicResource TextBlockViewHeader}" Grid.Column="1" />
+                    <TextBlock Text="Token will use RS256, RS384, RS512 as signature algorithm, you must have a RSA certificate with private key." Grid.Column="1" Grid.Row="1" />
+                </Grid>
+            </Button>
+            <Button Grid.Row="4" Margin="10,4" Style="{DynamicResource ToolbarButtonStyle}">
+                <Grid  Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:AppBarIcon IconKey="appbar_key" Grid.RowSpan="2" VerticalAlignment="Center" IsCircleVisible="True" Width="48" Margin="10,0" />
+                    <TextBlock Text="Generate a token using ECC algorithm." Style="{DynamicResource TextBlockViewHeader}" Grid.Column="1" />
+                    <TextBlock Text="Token will use ES256, ES384, ES512 as signature algorithm, you must have a RSA certificate with private key." Grid.Column="1" Grid.Row="1" />
+                </Grid>
+            </Button>
+        </Grid>
+        
+        <!-- Main Panel -->
+        <Grid Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" /> <!-- HEADER -->
+                <RowDefinition Height="Auto" /> <!-- Header algorithm selection -->
+                <RowDefinition Height="Auto" /> <!-- Header algorithm parameters... key certificate, ... -->
+                <RowDefinition Height="Auto" /> <!-- PAYLOAD -->
+                <RowDefinition Height="*" /> <!-- PAYLOAD_LIST -->
+                <RowDefinition Height="Auto" /> <!-- Button generate token -->
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="SIGNING ALGORITHM" Style="{DynamicResource TextBlockInformationHighlighted}" Grid.Row="1" Grid.ColumnSpan="2" />
+
+            <TextBlock Text="Algorithm:"  Grid.Row="2" VerticalAlignment="Center" Margin="4"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" Margin="4,2" x:Name="cbAlgorithms" SelectionChanged="CbAlgorithms_SelectionChanged" />
+
+            <Border Grid.Row="3" Grid.ColumnSpan="2" x:Name="borderKeyParemeterContainer"></Border>
+            
+            <TextBlock Text="PAYLOAD" Style="{DynamicResource TextBlockInformationHighlighted}" Grid.Row="4" Grid.ColumnSpan="2" />
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right">
+                <Button Style="{DynamicResource ToolbarButtonStyle }" x:Name="BtnAddClaim" Click="BtnAddClaim_Click">
+                    <StackPanel Orientation="Horizontal" >
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <DrawingBrush>
+                                <DrawingBrush.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Children>
+                                            <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,-0.000199999999999534L1.9998,1.9998 -0.000199999999999978,1.9998 -0.000199999999999978,5.9998 1.9998,5.9998 1.9998,7.9998 3.9998,7.9998 3.9998,12.9808 8.9998,15.4808 15.9998,11.9808 15.9998,5.9798 11.0048,3.4798 7.9998,4.9848 7.9998,1.9998 6.0008,1.9998 6.0008,-0.000199999999999534z" />
+                                            <GeometryDrawing Brush="#FF424242" Geometry="F1M9.0098,9L7.0098,8 11.0098,6 13.0098,7z M10.9998,5L4.9998,8 4.9998,12 8.9998,14 14.9998,11 14.9998,7z" />
+                                            <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M11,6L13,7 9,9 7,8z" />
+                                            <GeometryDrawing Brush="#FF388A34" Geometry="F1M3.0177,0.999700000000001L3.0177,3.0187 0.9997,3.0187 0.9997,5.0007 3.0177,5.0007 3.0177,6.9997 4.9997,6.9997 4.9997,5.0007 6.9997,5.0007 6.9997,3.0187 4.9997,3.0187 4.9997,0.999700000000001z" />
+                                        </DrawingGroup.Children>
+                                    </DrawingGroup>
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                        <TextBlock Text="Add Claim" Margin="2" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            
+            <ListView Grid.Row="5" x:Name="lstPayload" Grid.ColumnSpan="2" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Tag="{Binding}" Style="{DynamicResource ToolbarButtonStyle}" x:Name="BtnRemoveClaim" Click="BtnRemoveClaim_Click">
+                                        <Rectangle Width="16" Height="16">
+                                            <Rectangle.Fill>
+                                                <DrawingBrush>
+                                                    <DrawingBrush.Drawing>
+                                                        <DrawingGroup>
+                                                            <DrawingGroup.Children>
+                                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M3.9996,0.999700000000001L3.9996,1.9997 -0.000399999999999956,1.9997 -0.000399999999999956,5.9997 1.9996,5.9997 1.9996,12.0007 3.9996,12.0007 3.9996,15.9997 16.0006,15.9997 16.0006,0.999700000000001z" />
+                                                                <GeometryDrawing Brush="#FF424242" Geometry="F1M12,14L6,14 6,11 12,11z M4,7L10,7 10,10 4,10z M8,2L8,3 12,3 12,6 3,6 3,11 5,11 5,15 15,15 15,2z" />
+                                                                <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M8,6L12,6 12,3 8,3z M6,14L12,14 12,11 6,11z M10,10L4,10 4,7 10,7z" />
+                                                                <GeometryDrawing Brush="#FFA1260D" Geometry="F1M7,5L1,5 1,3 7,3z" />
+                                                            </DrawingGroup.Children>
+                                                        </DrawingGroup>
+                                                    </DrawingBrush.Drawing>
+                                                </DrawingBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="NAME" Width="100" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Name, Mode=TwoWay}" Style="{DynamicResource NoBorderTextboxStyle}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="VALUE" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Value, Mode=TwoWay}" Margin="0" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Description" Width="400">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name, Converter={StaticResource JwtNameToDescriptionConverter}}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button Click="BtnGenerateToken_Click" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Right" Style="{DynamicResource FlatButtonStyle}">
+                <StackPanel Orientation="Horizontal" >
+                    <ui:AppBarIcon IconKey="appbar_arrow_right" IsCircleVisible="True" Width="32" />
+                    <TextBlock Text="GENERATE TOKEN" VerticalAlignment="Center" Style="{DynamicResource TextBlockInformation}" Margin="8,0,0,0" />
+                </StackPanel>
+            </Button>
+
+            <TextBlock Text="Token:" Grid.Row="7" Margin="4" VerticalAlignment="Center" />
+            <TextBox x:Name="txtJwtToken" Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Margin="4" FontFamily="{DynamicResource CodeFontFamily}" FontSize="{DynamicResource Value14}"  />
+
+        </Grid>
+    </Grid>
+
+</ui:ModernContent>
