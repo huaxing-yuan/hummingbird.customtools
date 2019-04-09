@@ -11,6 +11,11 @@ While in this repository we maintain some highly used tools and can be considere
 
 ### The project contains a Test project that you can use the these tools independently 
 
+## Install extension to Hummingbird Application.
+The project will generate a ZIP package. To install the extension package, Goto Settings -> Extension Management
+then choose (or drag-and-drop the zip package) to install.
+Brief documentation: https://huaxing-yuan.github.io/hummingbird.doc/html/fb6150ac-4773-4457-afc2-e203cf917dc8.htm
+
 ### Hummingbird integrates some useful tools for people doing development and testing.
 Following tools are natively built-in:
 * Extension designer
