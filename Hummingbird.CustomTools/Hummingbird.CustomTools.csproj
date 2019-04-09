@@ -143,6 +143,8 @@
     <Compile Include="ControlSymmetricKey.xaml.cs">
       <DependentUpon>ControlSymmetricKey.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JwtClaim.cs" />
+    <Compile Include="JwtClaimType.cs" />
     <Compile Include="JwtNameToDescriptionConvertor.cs" />
     <Compile Include="JwtUtility.cs" />
     <Compile Include="KeyForm.cs" />

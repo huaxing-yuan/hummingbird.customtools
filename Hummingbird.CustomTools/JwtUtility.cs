@@ -36,9 +36,9 @@ namespace Hummingbird.CustomTools
             { SecurityAlgorithms.EcdsaSha256,   "ECDSA-SHA256" },
             { SecurityAlgorithms.EcdsaSha384,   "ECDSA-SHA384" },
             { SecurityAlgorithms.EcdsaSha512,   "ECDSA-SHA512" },
-            { SecurityAlgorithms.RsaSsaPssSha256,   "RSASSA-PSS-SHA256" },
-            { SecurityAlgorithms.RsaSsaPssSha384,   "RSASSA-PSS-SHA384" },
-            { SecurityAlgorithms.RsaSsaPssSha512,   "RSASSA-PSS-SHA512" },
+            //{ SecurityAlgorithms.RsaSsaPssSha256,   "RSASSA-PSS-SHA256" }, //not supported yet
+            //{ SecurityAlgorithms.RsaSsaPssSha384,   "RSASSA-PSS-SHA384" },
+            //{ SecurityAlgorithms.RsaSsaPssSha512,   "RSASSA-PSS-SHA512" },
             //{ SecurityAlgorithms.RsaOAEP, "RSA-OAEP" },
         };
 
@@ -53,6 +53,31 @@ namespace Hummingbird.CustomTools
             { "jti", "JWT ID - Case sensitive unique identifier of the token even among different issuers. " },
         };
 
+        internal static List<JwtClaim> WellknownClaims = new List<JwtClaim>()
+        {
+            new JwtClaim(){ Name = "iss",  ClaimType = JwtClaimType.String, DefaultValue = DefaultString },
+            new JwtClaim(){ Name = "sub",  ClaimType = JwtClaimType.String, DefaultValue = DefaultString },
+            new JwtClaim(){ Name = "aud",  ClaimType = JwtClaimType.String, DefaultValue = DefaultString },
+            new JwtClaim(){ Name = "exp",  ClaimType = JwtClaimType.Numberic, DefaultValue = DefaultUnixTimeAdd2H },
+            new JwtClaim(){ Name = "nbf",  ClaimType = JwtClaimType.Numberic, DefaultValue = DefaultUnixTime },
+            new JwtClaim(){ Name = "iat",  ClaimType = JwtClaimType.Numberic, DefaultValue = DefaultUnixTime },
+        };
+
+        private static object DefaultUnixTimeAdd2H()
+        {
+            return DateTimeOffset.UtcNow.AddHours(2).ToUnixTimeSeconds();
+        }
+
+        private static object DefaultUnixTime()
+        {
+            return DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        }
+
+        private static object DefaultString()
+        {
+            return string.Empty;
+        }
+
         /// <summary>
         /// Creates a Json Web Token (JWT) by given parameters (using symmetric algorithm HMAC-SHA) 
         /// </summary>
@@ -66,7 +91,6 @@ namespace Hummingbird.CustomTools
         /// </remarks>
         public static JwtSecurityToken CreateHmacShaToken(string base64Key, string algorithm, JwtPayload payload, out string token)
         {
-            
             byte[] key = Base64UrlEncoder.DecodeBytes(base64Key);
             var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(key);
             var secToken = CreateSecurityToken(securityKey, algorithm, payload, out token);

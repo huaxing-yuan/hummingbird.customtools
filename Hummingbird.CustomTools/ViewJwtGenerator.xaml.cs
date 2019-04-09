@@ -31,14 +31,19 @@ namespace Hummingbird.CustomTools
     public partial class ViewJwtGenerator : ModernContent
     {
 
-        ObservableCollection<Variable> JwtPayloadPairs = new ObservableCollection<Variable>();
+        ObservableCollection<JwtClaim> JwtPayloadPairs = new ObservableCollection<JwtClaim>();
 
         public ViewJwtGenerator()
         {
             InitializeComponent();
-            foreach (var v in JwtUtility.JwtPayloadDescription)
+            foreach (var v in JwtUtility.WellknownClaims)
             {
-                JwtPayloadPairs.Add(new Variable(v.Key, string.Empty));
+                JwtPayloadPairs.Add(new JwtClaim()
+                {
+                    Name = v.Name,
+                    Value = v.DefaultValue.Invoke(),
+                    ClaimType = v.ClaimType
+                });
             }
             lstPayload.ItemsSource = JwtPayloadPairs;
             foreach (var algo in JwtUtility.JwtSignatureAlgorithms)
@@ -113,13 +118,28 @@ namespace Hummingbird.CustomTools
 
         private void BtnGenerateToken_Click(object sender, RoutedEventArgs e)
         {
+            string step = null;
             try
             {
                 UpdateKeyParameter();
                 JwtPayload payload = new JwtPayload();
                 foreach (var v in JwtPayloadPairs)
                 {
-                    payload.Add(v.Name, v.Value);
+                    step = $"Claim: {v.Name}, Value: {v.Value}";
+                    object value;
+                    switch (v.ClaimType)
+                    {
+                        case JwtClaimType.Numberic:
+                            value = long.Parse(v.Value.ToString());
+                            break;
+                        case JwtClaimType.Decimal:
+                            value = decimal.Parse(v.Value.ToString());
+                            break;
+                        default:
+                            value = v.Value;
+                            break;
+                    }
+                    payload.Add(v.Name, value);
                 }
                 string algorithm = GetAlgotithm(cbAlgorithms.SelectedItem);
                 string token;
@@ -150,7 +170,7 @@ namespace Hummingbird.CustomTools
             }
             catch (Exception ex)
             {
-                ShowMessageBox("Error", ex.Message, ex.ToString());
+                ShowMessageBox("Error", "An error has occurred during generating " + step + "\nError Message: " + ex.Message, ex.ToString());
             }
         }
 
@@ -203,7 +223,7 @@ namespace Hummingbird.CustomTools
 
         private void BtnRemoveClaim_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is Button b && b.Tag is Variable v)
+            if(sender is Button b && b.Tag is JwtClaim v)
             {
                 JwtPayloadPairs.Remove(v);
             }
@@ -211,7 +231,7 @@ namespace Hummingbird.CustomTools
 
         private void BtnAddClaim_Click(object sender, RoutedEventArgs e)
         {
-            JwtPayloadPairs.AddItem("New Claim", "");
+            JwtPayloadPairs.Add(new JwtClaim { Name = "New Claim", ClaimType = JwtClaimType.String });
         }
     }
 }
