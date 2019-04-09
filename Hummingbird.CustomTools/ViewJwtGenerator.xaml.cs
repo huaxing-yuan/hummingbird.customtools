@@ -1,4 +1,5 @@
 ﻿using Hummingbird.TestFramework;
+using Hummingbird.TestFramework.Util;
 using Hummingbird.UI;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -31,18 +32,18 @@ namespace Hummingbird.CustomTools
     public partial class ViewJwtGenerator : ModernContent
     {
 
-        ObservableCollection<JwtClaim> JwtPayloadPairs = new ObservableCollection<JwtClaim>();
+        ObservableCollection<TokenClaim> JwtPayloadPairs = new ObservableCollection<TokenClaim>();
 
         public ViewJwtGenerator()
         {
             InitializeComponent();
-            foreach (var v in JwtUtility.WellknownClaims)
+            foreach (var v in Hummingbird.TestFramework.Util.JsonWebTokenUtility.WellknownClaims)
             {
-                JwtPayloadPairs.Add(new JwtClaim()
+                JwtPayloadPairs.Add(new TokenClaim()
                 {
                     Name = v.Name,
                     Value = v.DefaultValue.Invoke(),
-                    ClaimType = v.ClaimType
+                    ValueType = v.ValueType
                 });
             }
             lstPayload.ItemsSource = JwtPayloadPairs;
@@ -127,12 +128,12 @@ namespace Hummingbird.CustomTools
                 {
                     step = $"Claim: {v.Name}, Value: {v.Value}";
                     object value;
-                    switch (v.ClaimType)
+                    switch (v.ValueType)
                     {
-                        case JwtClaimType.Numberic:
+                        case ClaimValueType.Numberic:
                             value = long.Parse(v.Value.ToString());
                             break;
-                        case JwtClaimType.Decimal:
+                        case ClaimValueType.Decimal:
                             value = decimal.Parse(v.Value.ToString());
                             break;
                         default:
@@ -146,17 +147,17 @@ namespace Hummingbird.CustomTools
                 if (algorithm.StartsWith("HS"))
                 {
                     string base64Key = GetBase64Key(symmetricKey, keyform);
-                    JwtUtility.CreateHmacShaToken(base64Key, algorithm, payload, out token);
+                    JsonWebTokenUtility.CreateHmacShaToken(base64Key, algorithm, payload, out token);
                 }
                 else if (algorithm.StartsWith("RS"))
                 {
                     var importedCertificate = ImportCertificate(certificatePath, certificatePassword);
-                    JwtUtility.CreateRsaToken(importedCertificate, algorithm, payload, out token);
+                    JsonWebTokenUtility.CreateRsaToken(importedCertificate, algorithm, payload, out token);
                 }
                 else if (algorithm.StartsWith("ES"))
                 {
                     var importedCertificate = ImportCertificate(certificatePath, certificatePassword);
-                    JwtUtility.CreateEcdsaToken(importedCertificate, algorithm, payload, out token);
+                    JsonWebTokenUtility.CreateEcdsaToken(importedCertificate, algorithm, payload, out token);
                 }
                 else
                 {
@@ -223,7 +224,7 @@ namespace Hummingbird.CustomTools
 
         private void BtnRemoveClaim_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is Button b && b.Tag is JwtClaim v)
+            if(sender is Button b && b.Tag is TokenClaim v)
             {
                 JwtPayloadPairs.Remove(v);
             }
@@ -231,7 +232,7 @@ namespace Hummingbird.CustomTools
 
         private void BtnAddClaim_Click(object sender, RoutedEventArgs e)
         {
-            JwtPayloadPairs.Add(new JwtClaim { Name = "New Claim", ClaimType = JwtClaimType.String });
+            JwtPayloadPairs.Add(new TokenClaim { Name = "New Claim", ValueType = ClaimValueType.String });
         }
     }
 }

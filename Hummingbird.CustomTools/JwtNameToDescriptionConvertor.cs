@@ -13,9 +13,9 @@ namespace Hummingbird.CustomTools
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string name = value?.ToString();
-            if(name != null && JwtUtility.JwtPayloadDescription.ContainsKey(name))
+            if(name != null && TestFramework.Util.JsonWebTokenUtility.WellKnownClaimDescriptions.ContainsKey(name))
             {
-                return JwtUtility.JwtPayloadDescription[name];
+                return TestFramework.Util.JsonWebTokenUtility.WellKnownClaimDescriptions[name];
             }
             else
             {
