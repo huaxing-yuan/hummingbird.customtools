@@ -153,6 +153,9 @@
     <Compile Include="ViewJwtGenerator.xaml.cs">
       <DependentUpon>ViewJwtGenerator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowInputPassword.xaml.cs">
+      <DependentUpon>WindowInputPassword.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -176,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewJwtGenerator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowInputPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

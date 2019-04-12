@@ -181,7 +181,7 @@ namespace Hummingbird.CustomTools
             return cert;
         }
 
-        private static string GetBase64Key(string symmetricKey, KeyFormat keyform)
+        internal static string GetBase64Key(string symmetricKey, KeyFormat keyform)
         {
             switch (keyform)
             {

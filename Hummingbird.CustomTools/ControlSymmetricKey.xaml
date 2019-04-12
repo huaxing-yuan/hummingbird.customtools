@@ -26,7 +26,7 @@
             </TextBox>
         </AdornerDecorator>
 
-        <TextBlock Text="Key Form:"  Grid.Row="1" VerticalAlignment="Center"/>
+        <TextBlock Text="Key Format:"  Grid.Row="1" VerticalAlignment="Center"/>
         <ComboBox x:Name="cbKeyForm" Grid.Row="1" Grid.Column="1" Margin="2" />
 
     </ui:GridWithPadding>
