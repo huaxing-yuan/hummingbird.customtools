@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hummingbird.TestFramework.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,14 +21,14 @@ namespace Hummingbird.CustomTools
     /// </summary>
     public partial class ControlSymmetricKey : UserControl
     {
-        public ControlSymmetricKey(string symmetricKey, KeyForm keyform)
+        public ControlSymmetricKey(string symmetricKey, KeyFormat keyform)
         {
             InitializeComponent();
             txtSecretKey.Text = symmetricKey;
-            cbKeyForm.Items.Add(KeyForm.Hexadecimal);
-            cbKeyForm.Items.Add(KeyForm.Base64Encoded);
-            cbKeyForm.Items.Add(KeyForm.Base64UrlEncoded);
-            cbKeyForm.Items.Add(KeyForm.OrdinaryString);
+            cbKeyForm.Items.Add(KeyFormat.Hexadecimal);
+            cbKeyForm.Items.Add(KeyFormat.Base64Encoded);
+            cbKeyForm.Items.Add(KeyFormat.Base64UrlEncoded);
+            cbKeyForm.Items.Add(KeyFormat.OrdinaryString);
             cbKeyForm.SelectedItem = keyform;
         }
 
@@ -36,9 +37,9 @@ namespace Hummingbird.CustomTools
             return txtSecretKey.Text.Trim();
         }
 
-        internal KeyForm GetKeyForm()
+        internal KeyFormat GetKeyForm()
         {
-            return (KeyForm)cbKeyForm.SelectedItem;
+            return (KeyFormat)cbKeyForm.SelectedItem;
         }
     }
 }

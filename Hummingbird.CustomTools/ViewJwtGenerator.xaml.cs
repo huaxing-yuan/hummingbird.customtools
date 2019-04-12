@@ -47,7 +47,7 @@ namespace Hummingbird.CustomTools
                 });
             }
             lstPayload.ItemsSource = JwtPayloadPairs;
-            foreach (var algo in JwtUtility.JwtSignatureAlgorithms)
+            foreach (var algo in JsonWebTokenUtility.SignatureAlgorithms)
             {
                 cbAlgorithms.Items.Add(new ComboBoxItem()
                 {
@@ -62,7 +62,7 @@ namespace Hummingbird.CustomTools
 
         //used for symmetric algorithms
         string symmetricKey;
-        KeyForm keyform;
+        KeyFormat keyform;
         string certificatePath;
         string certificatePassword;
 
@@ -130,7 +130,7 @@ namespace Hummingbird.CustomTools
                     object value;
                     switch (v.ValueType)
                     {
-                        case ClaimValueType.Numberic:
+                        case ClaimValueType.Numeric:
                             value = long.Parse(v.Value.ToString());
                             break;
                         case ClaimValueType.Decimal:
@@ -181,16 +181,16 @@ namespace Hummingbird.CustomTools
             return cert;
         }
 
-        private static string GetBase64Key(string symmetricKey, KeyForm keyform)
+        private static string GetBase64Key(string symmetricKey, KeyFormat keyform)
         {
             switch (keyform)
             {
-                case KeyForm.Base64Encoded:
+                case KeyFormat.Base64Encoded:
                     byte[] data = Convert.FromBase64String(symmetricKey);
                     return Base64UrlEncoder.Encode(data);
-                case KeyForm.Base64UrlEncoded:
+                case KeyFormat.Base64UrlEncoded:
                     return symmetricKey;
-                case KeyForm.Hexadecimal:
+                case KeyFormat.Hexadecimal:
                     data = GetStringFromHex(symmetricKey);
                     return Base64UrlEncoder.Encode(data);
                 default:

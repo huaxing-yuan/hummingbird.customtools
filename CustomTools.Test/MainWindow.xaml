@@ -9,13 +9,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <TabControl>
-        <TabItem Header="JW Decoder">
+        <TabItem Header="JWT Decoder">
             <customtools:ViewJsonWebToken />
         </TabItem>
         <TabItem Header="JWT Generator">
             <customtools:ViewJwtGenerator />
         </TabItem>        
-        <TabItem Header="ViewDocFormatter">
+        <TabItem Header="Doc Formatter">
             <customtools:ViewDocFormatter />
         </TabItem>
 
