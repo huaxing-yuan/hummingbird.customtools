@@ -1,6 +1,7 @@
 ﻿using Hummingbird.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,16 @@ namespace CustomTools.Test
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ModernLink_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://huaxing-yuan.github.io/hummingbird.doc/html/fb6150ac-4773-4457-afc2-e203cf917dc8.htm");
+        }
+
+        private void ModernLink_Click_1(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/huaxing-yuan/hummingbird.customtools");
         }
     }
 }

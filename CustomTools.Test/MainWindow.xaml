@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:CustomTools.Test"
         xmlns:customtools="clr-namespace:Hummingbird.CustomTools;assembly=Hummingbird.CustomTools"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Hummingbird Custom tools (Testing Application)" Height="450" Width="800">
     <TabControl>
         <TabItem Header="JWT Decoder">
             <customtools:ViewJsonWebToken />
@@ -17,6 +17,18 @@
         </TabItem>        
         <TabItem Header="Doc Formatter">
             <customtools:ViewDocFormatter />
+        </TabItem>
+        <TabItem Header="About">
+            <StackPanel Margin="40,20,0,0">
+                <TextBlock Text="Hummingbird Custom Tools - Example application" Style="{DynamicResource TextBlockViewHeaderHighlighted}"  />
+                <TextBlock Text="Copyright © 2018-2019 Huaxing YUAN, All rights reserved." Margin="10,0"  />
+                <TextBlock Text="All code and application used in this project is licensed under: MIT License" Margin="10,0"  />
+
+                <TextBlock Text="This application is used to test custom tools without the need of installing this extension to Hummingbird Test Studio." Margin="{DynamicResource HeaderMargin}" TextWrapping="WrapWithOverflow" />
+
+                <ui:ModernLink IconKey="appbar_social_github_octocat" Text="Go to the GitHub repository of this application" Click="ModernLink_Click_1" />
+                <ui:ModernLink IconKey="appbar_link" Text="How do install this extension to Hummingbird Test Studio" Click="ModernLink_Click" />
+            </StackPanel>
         </TabItem>
 
     </TabControl>

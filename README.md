@@ -10,6 +10,8 @@ While in this repository we maintain some highly used tools and can be considere
 * Document Formatter: A tool that can format XML and JSON document in pretty-print 
 
 ### The project contains a Test project that you can use the these tools independently 
+## Test the extension using the test app
+![Testapp](testapp.png)
 
 ## Install extension to Hummingbird Application.
 The project will generate a ZIP package. To install the extension package, Goto Settings -> Extension Management
