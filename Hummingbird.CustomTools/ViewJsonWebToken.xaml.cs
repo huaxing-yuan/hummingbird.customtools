@@ -139,5 +139,22 @@ namespace Hummingbird.CustomTools
             this.ShowInformation("Validation OK", "This Json Web Token is validated.");
         }
 
+        private void ModernContent_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.IsDarkTheme)
+                {
+                    txtHeader.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("JS_DARK");
+                }
+                else
+                {
+                    txtHeader.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("JS_LIGHT");
+                }
+            }
+            catch { 
+                //Intentionaly empty
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hummingbird.CustomTools"
-    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" Loaded="ModernContent_Loaded"
     mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ui:ModernContent.Resources>
@@ -67,12 +67,13 @@
                 <Border Background="{DynamicResource ControlBackgroundBrush}" Margin="1" Padding="4">
                     <TextBlock Text="HEADER"  Style="{DynamicResource TextBlockInformation}" />
                 </Border>
-                <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" Grid.Row="1" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="txtHeader" />
+                <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" SyntaxHighlighting="Json" Grid.Row="1" ShowLineNumbers="True"  Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="txtHeader" FontFamily="{DynamicResource CodeFontFamily}" />
 
                 <Border Grid.Column="1" Background="{DynamicResource ControlBackgroundBrush}" Margin="1" Padding="4">
                     <TextBlock Text="PAYLOAD"  Style="{DynamicResource TextBlockInformation}"  />
                 </Border>
-                <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" Grid.Row="1" Grid.Column="1" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="txtPayload"/>
+                <avalonedit:TextEditor Foreground="{DynamicResource ForegroundBrush}" SyntaxHighlighting="Json" ShowLineNumbers="True" Grid.Row="1" Grid.Column="1" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="txtPayload"  FontFamily="{DynamicResource CodeFontFamily}" />
+                
             </ui:GridWithPadding>
 
 
